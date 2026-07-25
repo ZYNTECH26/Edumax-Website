@@ -66,18 +66,7 @@ export function Navbar({ onApply }: { onApply: () => void }) {
             cursor: "pointer",
           }}
         >
-          <img src={logo} alt="Edumax Global College" style={{ width: 52, height: 52, objectFit: "contain", flexShrink: 0 }} />
-          <span style={{
-            fontFamily: "'Inter', -apple-system, sans-serif",
-            fontSize: "12px",
-            fontWeight: 600,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: scrolled ? "#0E1E45" : "#ffffff",
-            transition: "color 0.3s",
-          }}>
-            Global College
-          </span>
+          <img src={logo} alt="Edumax Global College" style={{ width: 56, height: 56, objectFit: "contain", flexShrink: 0 }} />
         </button>
 
         {/* Desktop nav */}
