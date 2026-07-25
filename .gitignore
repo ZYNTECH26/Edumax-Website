@@ -17,3 +17,5 @@ Thumbs.db
 
 # Raw photo drop-off — the actual site assets live in src/assets/gallery
 /Images
+
+.vercel

@@ -15,6 +15,8 @@ const navLinks = [
 export function Navbar({ onApply }: { onApply: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [ctaHovered, setCtaHovered] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -41,13 +43,15 @@ export function Navbar({ onApply }: { onApply: () => void }) {
           left: 0,
           right: 0,
           zIndex: 50,
-          height: 72,
+          height: 80,
           display: "flex",
           alignItems: "center",
           padding: "0 2rem",
-          transition: "background 0.25s ease, border-color 0.25s ease",
-          background: scrolled ? "rgba(255,255,255,0.98)" : "transparent",
-          borderBottom: scrolled ? "1px solid rgba(14,30,69,0.1)" : "1px solid transparent",
+          transition: "background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease",
+          background: scrolled ? "rgba(255,255,255,0.85)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px) saturate(1.6)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(16px) saturate(1.6)" : "none",
+          boxShadow: scrolled ? "0 4px 30px rgba(14,30,69,0.08)" : "none",
         }}
       >
         {/* Logo */}
@@ -56,30 +60,21 @@ export function Navbar({ onApply }: { onApply: () => void }) {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.65rem",
+            gap: "0.75rem",
             background: "none",
             border: "none",
             cursor: "pointer",
           }}
         >
-          <img src={logo} alt="" style={{ width: 38, height: 38, objectFit: "contain", flexShrink: 0 }} />
-          <span style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontWeight: 700,
-            fontSize: "1.2rem",
-            letterSpacing: "-0.01em",
-            color: scrolled ? "#0E1E45" : "#ffffff",
-            lineHeight: 1,
-            transition: "color 0.25s",
-          }}>
-            Edumax
-          </span>
+          <img src={logo} alt="Edumax Global College" style={{ width: 52, height: 52, objectFit: "contain", flexShrink: 0 }} />
           <span style={{
             fontFamily: "'Inter', -apple-system, sans-serif",
             fontSize: "12px",
-            fontWeight: 400,
-            color: scrolled ? "#6b6560" : "rgba(255,255,255,0.55)",
-            transition: "color 0.25s",
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: scrolled ? "#0E1E45" : "#ffffff",
+            transition: "color 0.3s",
           }}>
             Global College
           </span>
@@ -87,39 +82,57 @@ export function Navbar({ onApply }: { onApply: () => void }) {
 
         {/* Desktop nav */}
         <div
-          style={{ display: "flex", alignItems: "center", gap: "0.1rem", marginLeft: "auto", marginRight: "1.5rem" }}
+          style={{ display: "flex", alignItems: "center", gap: "0.15rem", marginLeft: "auto", marginRight: "1.75rem" }}
           className="hidden md:flex"
         >
           {navLinks.map((link) => (
             <button
               key={link.label}
               onClick={() => handleNav(link.href, link.type)}
+              onMouseEnter={() => setHoveredLink(link.label)}
+              onMouseLeave={() => setHoveredLink(null)}
               style={{
+                position: "relative",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
-                padding: "0.5rem 0.75rem",
+                padding: "0.5rem 0.85rem",
                 fontFamily: "'Inter', -apple-system, sans-serif",
                 fontWeight: 500,
                 fontSize: "14px",
-                color: scrolled ? "#14161A" : "rgba(255,255,255,0.85)",
+                color: scrolled ? "#14161A" : "rgba(255,255,255,0.9)",
                 transition: "color 0.2s",
                 minHeight: 44,
               }}
             >
               {link.label}
+              <span style={{
+                position: "absolute",
+                left: "0.85rem",
+                right: "0.85rem",
+                bottom: 4,
+                height: 2,
+                borderRadius: 2,
+                background: "#F5A623",
+                transform: hoveredLink === link.label ? "scaleX(1)" : "scaleX(0)",
+                transformOrigin: "center",
+                transition: "transform 0.25s ease",
+              }} />
             </button>
           ))}
         </div>
 
-        {/* CTA — hard-edged, no rounded pill, no box-shadow */}
+        {/* CTA */}
         <button
           onClick={onApply}
+          onMouseEnter={() => setCtaHovered(true)}
+          onMouseLeave={() => setCtaHovered(false)}
           className="hidden md:block"
           style={{
             background: "#F5A623",
             border: "none",
-            padding: "0.55rem 1.35rem",
+            borderRadius: 9999,
+            padding: "0.65rem 1.5rem",
             fontFamily: "'Inter', -apple-system, sans-serif",
             fontWeight: 600,
             fontSize: "13px",
@@ -127,6 +140,9 @@ export function Navbar({ onApply }: { onApply: () => void }) {
             cursor: "pointer",
             whiteSpace: "nowrap",
             minHeight: 44,
+            boxShadow: ctaHovered ? "0 6px 20px rgba(245,166,35,0.45)" : "0 2px 10px rgba(245,166,35,0.25)",
+            transform: ctaHovered ? "translateY(-1px)" : "translateY(0)",
+            transition: "box-shadow 0.2s ease, transform 0.2s ease",
           }}
         >
           Apply for 2026
@@ -153,13 +169,15 @@ export function Navbar({ onApply }: { onApply: () => void }) {
         </button>
       </nav>
 
-      {/* Mobile overlay — flat navy, no blur */}
+      {/* Mobile overlay */}
       {menuOpen && (
         <div style={{
           position: "fixed",
           inset: 0,
           zIndex: 40,
-          background: "#0E1E45",
+          background: "rgba(8,15,36,0.97)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -192,6 +210,7 @@ export function Navbar({ onApply }: { onApply: () => void }) {
               marginTop: "2rem",
               background: "#F5A623",
               border: "none",
+              borderRadius: 9999,
               padding: "0.875rem 2.5rem",
               fontFamily: "'Inter', -apple-system, sans-serif",
               fontWeight: 600,
