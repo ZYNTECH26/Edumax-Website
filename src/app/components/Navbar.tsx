@@ -116,7 +116,7 @@ export function Navbar({ onApply }: { onApply: () => void }) {
           onClick={onApply}
           onMouseEnter={() => setCtaHovered(true)}
           onMouseLeave={() => setCtaHovered(false)}
-          className="hidden md:block"
+          className="hidden md:block press-btn"
           style={{
             background: "#F5A623",
             border: "none",
@@ -195,6 +195,7 @@ export function Navbar({ onApply }: { onApply: () => void }) {
           ))}
           <button
             onClick={() => { setMenuOpen(false); onApply(); }}
+            className="press-btn"
             style={{
               marginTop: "2rem",
               background: "#F5A623",

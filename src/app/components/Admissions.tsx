@@ -242,6 +242,7 @@ export function Admissions({ onApply }: { onApply: () => void }) {
               </ul>
 
               <button
+                className="press-btn"
                 style={{
                   width: "100%",
                   border: plan.featured ? "2px solid #F5A623" : "2px solid #0E1E45",
@@ -253,7 +254,7 @@ export function Admissions({ onApply }: { onApply: () => void }) {
                   color: plan.featured ? "#F5A623" : "#0E1E45",
                   background: "transparent",
                   cursor: "pointer",
-                  transition: "background 0.2s, color 0.2s",
+                  transition: "background 0.2s, color 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",

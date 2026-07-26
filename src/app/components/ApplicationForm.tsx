@@ -130,6 +130,7 @@ function ReviewRow({ label, value }: { label: string; value: string }) {
 
 export function ApplicationForm({ onClose }: Props) {
   const [step, setStep] = useState(1);
+  const [direction, setDirection] = useState<1 | -1>(1);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -268,6 +269,7 @@ export function ApplicationForm({ onClose }: Props) {
           </div>
           <button
             onClick={onClose}
+            className="press-btn"
             style={{
               background: "rgba(255,255,255,0.08)",
               border: "1px solid rgba(255,255,255,0.12)",
@@ -280,7 +282,7 @@ export function ApplicationForm({ onClose }: Props) {
               cursor: "pointer",
               color: "rgba(255,255,255,0.6)",
               flexShrink: 0,
-              transition: "background 0.2s",
+              transition: "background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
             }}
             onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.15)"}
             onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"}
@@ -412,6 +414,7 @@ export function ApplicationForm({ onClose }: Props) {
               </div>
               <button
                 onClick={onClose}
+                className="press-btn"
                 style={{
                   background: "#F5A623",
                   border: "none",
@@ -429,7 +432,15 @@ export function ApplicationForm({ onClose }: Props) {
               </button>
             </div>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div
+              key={step}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1.25rem",
+                animation: `${direction === 1 ? "stepInRight" : "stepInLeft"} 0.35s cubic-bezier(0.23, 1, 0.32, 1) both`,
+              }}
+            >
 
               {/* Step 1 — Student Info */}
               {step === 1 && (
@@ -711,8 +722,9 @@ export function ApplicationForm({ onClose }: Props) {
             flexShrink: 0,
           }}>
             <button
-              onClick={() => setStep((s) => s - 1)}
+              onClick={() => { setDirection(-1); setStep((s) => s - 1); }}
               disabled={step === 1}
+              className="press-btn"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -726,7 +738,7 @@ export function ApplicationForm({ onClose }: Props) {
                 fontSize: "0.875rem",
                 color: step === 1 ? "#ccc" : "#0E1E45",
                 cursor: step === 1 ? "not-allowed" : "pointer",
-                transition: "border-color 0.2s",
+                transition: "border-color 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
               }}
             >
               <ChevronLeft size={16} /> Back
@@ -746,7 +758,8 @@ export function ApplicationForm({ onClose }: Props) {
 
             {step < 4 ? (
               <button
-                onClick={() => canNext() && setStep((s) => s + 1)}
+                onClick={() => { if (canNext()) { setDirection(1); setStep((s) => s + 1); } }}
+                className="press-btn"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -760,7 +773,7 @@ export function ApplicationForm({ onClose }: Props) {
                   fontSize: "0.875rem",
                   color: canNext() ? "#ffffff" : "#aaa",
                   cursor: canNext() ? "pointer" : "not-allowed",
-                  transition: "background 0.2s",
+                  transition: "background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
                 }}
               >
                 Next <ChevronRight size={16} />
@@ -783,6 +796,7 @@ export function ApplicationForm({ onClose }: Props) {
                 <button
                   onClick={handleSubmit}
                   disabled={submitting}
+                  className="press-btn"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -797,7 +811,7 @@ export function ApplicationForm({ onClose }: Props) {
                     color: "#0E1E45",
                     cursor: submitting ? "not-allowed" : "pointer",
                     boxShadow: "0 4px 20px rgba(245,166,35,0.35)",
-                    transition: "transform 0.2s, box-shadow 0.2s",
+                    transition: "transform 120ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.2s",
                   }}
                 >
                   {submitting ? (
@@ -821,6 +835,14 @@ export function ApplicationForm({ onClose }: Props) {
           .step-label { display: none; }
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes stepInRight {
+          from { opacity: 0; transform: translateX(24px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes stepInLeft {
+          from { opacity: 0; transform: translateX(-24px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
       `}</style>
     </div>
   );

@@ -141,11 +141,14 @@ export function Hero({ onApply }: { onApply: () => void }) {
                 (e.currentTarget as HTMLElement).style.transform = "scale(1)";
                 (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 25px rgba(245,166,35,0.4)";
               }}
+              onMouseDown={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(0.97)"; }}
+              onMouseUp={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.04)"; }}
             >
               Apply Now
             </button>
             <button
               onClick={() => handleScroll("#academics")}
+              className="press-btn"
               style={{
                 background: "transparent",
                 border: "2px solid rgba(255,255,255,0.5)",
@@ -156,7 +159,7 @@ export function Hero({ onApply }: { onApply: () => void }) {
                 fontSize: "1rem",
                 color: "#ffffff",
                 cursor: "pointer",
-                transition: "border-color 0.2s, background 0.2s",
+                transition: "border-color 0.2s, background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.borderColor = "#ffffff";

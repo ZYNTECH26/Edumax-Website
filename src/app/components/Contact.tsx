@@ -195,6 +195,8 @@ export function Contact() {
                 (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                 (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(37,211,102,0.3)";
               }}
+              onMouseDown={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px) scale(0.97)"; }}
+              onMouseUp={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
             >
               <MessageCircle size={20} />
               Chat with us on WhatsApp
@@ -415,6 +417,8 @@ export function Contact() {
                       (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                       (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(245,166,35,0.35)";
                     }}
+                    onMouseDown={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px) scale(0.97)"; }}
+                    onMouseUp={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
                   >
                     Submit Enquiry <Send size={16} />
                   </button>

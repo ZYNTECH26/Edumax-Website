@@ -93,6 +93,7 @@ export function Footer({ onApply }: { onApply: () => void }) {
               {["f", "t", "in", "wa"].map((icon) => (
                 <div
                   key={icon}
+                  className="press-btn"
                   style={{
                     width: 36,
                     height: 36,
@@ -103,7 +104,7 @@ export function Footer({ onApply }: { onApply: () => void }) {
                     alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
-                    transition: "background 0.2s",
+                    transition: "background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
                     fontFamily: "'Manrope', sans-serif",
                     fontWeight: 700,
                     fontSize: "0.75rem",

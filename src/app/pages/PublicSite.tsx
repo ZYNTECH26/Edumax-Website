@@ -42,6 +42,24 @@ export default function PublicSite() {
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(14,30,69,0.2); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(14,30,69,0.4); }
+
+        /* Shared press feedback — buttons feel like they're actually listening */
+        .press-btn { transition: transform 120ms cubic-bezier(0.23, 1, 0.32, 1); }
+        .press-btn:active { transform: scale(0.97); }
+
+        @media (hover: none) and (pointer: coarse) {
+          .press-btn:active { transform: scale(0.96); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          html { scroll-behavior: auto; }
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
       `}</style>
     </div>
   );

@@ -19,3 +19,8 @@ Thumbs.db
 /Images
 
 .vercel
+
+# Local design/animation skill packages — not part of the deployed site
+/.agents
+/.claude
+skills-lock.json
