@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, cloneElement, isValidElement } from "react";
 import { X, ChevronRight, ChevronLeft, Check, User, BookOpen, Users, FileText, CheckCircle, Loader } from "lucide-react";
 import { submitApplication } from "../../lib/api";
 
@@ -38,23 +38,28 @@ const LABEL_STYLE: React.CSSProperties = {
   letterSpacing: "0.02em",
 };
 
+const toFieldId = (label: string) =>
+  `app-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`;
+
 function Field({ label, children, required }: { label: string; children: React.ReactNode; required?: boolean }) {
+  const id = toFieldId(label);
   return (
     <div>
-      <label style={LABEL_STYLE}>
+      <label htmlFor={id} style={LABEL_STYLE}>
         {label} {required && <span style={{ color: "#F5A623" }}>*</span>}
       </label>
-      {children}
+      {isValidElement(children) ? cloneElement(children, { id } as any) : children}
     </div>
   );
 }
 
-function Input({ value, onChange, placeholder, type = "text", name }: {
-  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; name?: string;
+function Input({ value, onChange, placeholder, type = "text", name, id }: {
+  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; name?: string; id?: string;
 }) {
   const [focused, setFocused] = useState(false);
   return (
     <input
+      id={id}
       type={type}
       name={name}
       value={value}
@@ -67,12 +72,13 @@ function Input({ value, onChange, placeholder, type = "text", name }: {
   );
 }
 
-function Select({ value, onChange, options, placeholder }: {
-  value: string; onChange: (v: string) => void; options: string[]; placeholder?: string;
+function Select({ value, onChange, options, placeholder, id }: {
+  value: string; onChange: (v: string) => void; options: string[]; placeholder?: string; id?: string;
 }) {
   const [focused, setFocused] = useState(false);
   return (
     <select
+      id={id}
       value={value}
       onChange={(e) => onChange(e.target.value)}
       style={{

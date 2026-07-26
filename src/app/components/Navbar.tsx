@@ -141,6 +141,8 @@ export function Navbar({ onApply }: { onApply: () => void }) {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
           style={{
             marginLeft: "auto",
             background: "none",

@@ -144,19 +144,21 @@ export function FutureSkills() {
                 padding: "1.75rem",
                 boxShadow: "0 4px 20px rgba(14,30,69,0.07)",
                 border: "1px solid rgba(14,30,69,0.07)",
-                transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                transition: `opacity 0.6s ease ${0.05 + i * 0.08}s, transform 0.6s ease ${0.05 + i * 0.08}s, box-shadow 0.25s ease`,
                 cursor: "default",
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(30px)",
               }}
-              style-transition-delay={`${0.05 + i * 0.08}s`}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.transform = "translateY(-5px) scale(1.01)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 14px 35px rgba(14,30,69,0.12)";
+                const el = e.currentTarget as HTMLElement;
+                el.style.transition = "transform 0.25s ease, box-shadow 0.25s ease";
+                el.style.transform = "translateY(-5px) scale(1.01)";
+                el.style.boxShadow = "0 14px 35px rgba(14,30,69,0.12)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.transform = "translateY(0) scale(1)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(14,30,69,0.07)";
+                const el = e.currentTarget as HTMLElement;
+                el.style.transform = "translateY(0) scale(1)";
+                el.style.boxShadow = "0 4px 20px rgba(14,30,69,0.07)";
               }}
             >
               <div style={{

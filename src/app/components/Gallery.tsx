@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchGalleryItems } from "../../lib/api";
 import campus01 from "../../assets/gallery/campus-01.jpg";
 import campus02 from "../../assets/gallery/campus-02.jpg";
@@ -48,7 +49,23 @@ export function Gallery() {
   const [photos, setPhotos] = useState<Photo[]>(FALLBACK_PHOTOS);
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (lightbox === null) return;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowRight") setLightbox((i) => (i === null ? null : (i + 1) % photos.length));
+      if (e.key === "ArrowLeft") setLightbox((i) => (i === null ? null : (i - 1 + photos.length) % photos.length));
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [lightbox, photos.length]);
 
   useEffect(() => {
     fetchGalleryItems()
@@ -150,6 +167,9 @@ export function Gallery() {
             return (
               <div
                 key={photo.url}
+                role="button"
+                tabIndex={0}
+                aria-label={`View larger photo: ${photo.caption}`}
                 style={{
                   gridColumn: span.col,
                   gridRow: span.row,
@@ -164,6 +184,8 @@ export function Gallery() {
                 }}
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
+                onClick={() => setLightbox(i)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setLightbox(i); } }}
               >
                 <img
                   src={photo.url}
@@ -226,7 +248,7 @@ export function Gallery() {
       </div>
 
       {/* Marquee */}
-      <div style={{
+      <div aria-hidden="true" style={{
         marginTop: "5rem",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         overflow: "hidden",
@@ -256,7 +278,149 @@ export function Gallery() {
         </div>
       </div>
 
+      {/* Lightbox */}
+      {lightbox !== null && (
+        <div
+          onClick={() => setLightbox(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 400,
+            background: "rgba(4,8,20,0.94)",
+            backdropFilter: "blur(20px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "2rem",
+            animation: "lightboxIn 0.25s cubic-bezier(0.23, 1, 0.32, 1) both",
+          }}
+        >
+          <button
+            onClick={() => setLightbox(null)}
+            aria-label="Close photo"
+            className="press-btn"
+            style={{
+              position: "absolute",
+              top: "1.5rem",
+              right: "1.5rem",
+              width: 44,
+              height: 44,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#ffffff",
+              cursor: "pointer",
+              transition: "background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
+            }}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.18)"}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"}
+          >
+            <X size={20} />
+          </button>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i === null ? null : (i - 1 + photos.length) % photos.length)); }}
+            aria-label="Previous photo"
+            className="press-btn"
+            style={{
+              position: "absolute",
+              left: "1.5rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: 44,
+              height: 44,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#ffffff",
+              cursor: "pointer",
+              transition: "background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
+            }}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.18)"}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"}
+          >
+            <ChevronLeft size={22} />
+          </button>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i === null ? null : (i + 1) % photos.length)); }}
+            aria-label="Next photo"
+            className="press-btn"
+            style={{
+              position: "absolute",
+              right: "1.5rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: 44,
+              height: 44,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#ffffff",
+              cursor: "pointer",
+              transition: "background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
+            }}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.18)"}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"}
+          >
+            <ChevronRight size={22} />
+          </button>
+
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "min(90vw, 1100px)",
+              maxHeight: "85vh",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "1rem",
+            }}
+          >
+            <img
+              key={lightbox}
+              src={photos[lightbox].url}
+              alt={photos[lightbox].alt}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "75vh",
+                objectFit: "contain",
+                borderRadius: 8,
+                boxShadow: "0 30px 90px rgba(0,0,0,0.5)",
+                animation: "lightboxImgIn 0.3s cubic-bezier(0.23, 1, 0.32, 1) both",
+              }}
+            />
+            <p style={{
+              fontFamily: "'Sora', sans-serif",
+              fontWeight: 700,
+              fontSize: "0.95rem",
+              color: "#ffffff",
+              margin: 0,
+            }}>
+              {photos[lightbox].caption}
+            </p>
+          </div>
+        </div>
+      )}
+
       <style>{`
+        @keyframes lightboxIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes lightboxImgIn {
+          from { opacity: 0; transform: scale(0.97); }
+          to { opacity: 1; transform: scale(1); }
+        }
         @keyframes marquee {
           from { transform: translateX(0); }
           to { transform: translateX(-50%); }

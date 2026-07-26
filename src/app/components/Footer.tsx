@@ -1,6 +1,8 @@
 import { MapPin, Phone, MessageCircle } from "lucide-react";
 import logo from "../../assets/egc-logo.png";
 
+const WHATSAPP_NUMBER = "263771503198";
+
 const quickLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
@@ -90,32 +92,30 @@ export function Footer({ onApply }: { onApply: () => void }) {
               in every student through Cambridge-aligned academics and future-ready skills.
             </p>
             <div style={{ display: "flex", gap: "0.5rem" }}>
-              {["f", "t", "in", "wa"].map((icon) => (
-                <div
-                  key={icon}
-                  className="press-btn"
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: "50%",
-                    background: "rgba(255,255,255,0.07)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    transition: "background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
-                    fontFamily: "'Manrope', sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.75rem",
-                    color: "rgba(255,255,255,0.5)",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(245,166,35,0.2)"}
-                  onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.07)"}
-                >
-                  {icon.toUpperCase()}
-                </div>
-              ))}
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat with Edumax Global College on WhatsApp"
+                className="press-btn"
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.07)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "background 0.2s, transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
+                  color: "rgba(255,255,255,0.5)",
+                }}
+                onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(245,166,35,0.2)"}
+                onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.07)"}
+              >
+                <MessageCircle size={16} strokeWidth={1.75} />
+              </a>
             </div>
           </div>
 

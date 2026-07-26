@@ -271,7 +271,7 @@ export function Contact() {
                     { name: "phone", label: "Parent / Guardian Contact Number", type: "tel", placeholder: "e.g. 0771 503 198" },
                   ].map((field) => (
                     <div key={field.name}>
-                      <label style={{
+                      <label htmlFor={`contact-${field.name}`} style={{
                         display: "block",
                         fontFamily: "'Manrope', sans-serif",
                         fontSize: "0.85rem",
@@ -282,6 +282,7 @@ export function Contact() {
                         {field.label}
                       </label>
                       <input
+                        id={`contact-${field.name}`}
                         type={field.type}
                         name={field.name}
                         value={(form as any)[field.name]}
@@ -308,7 +309,7 @@ export function Contact() {
                   ))}
 
                   <div>
-                    <label style={{
+                    <label htmlFor="contact-form_level" style={{
                       display: "block",
                       fontFamily: "'Manrope', sans-serif",
                       fontSize: "0.85rem",
@@ -320,6 +321,7 @@ export function Contact() {
                     </label>
                     <div style={{ position: "relative" }}>
                       <select
+                        id="contact-form_level"
                         name="form_level"
                         value={form.form_level}
                         onChange={handleChange}
@@ -355,7 +357,7 @@ export function Contact() {
                   </div>
 
                   <div>
-                    <label style={{
+                    <label htmlFor="contact-message" style={{
                       display: "block",
                       fontFamily: "'Manrope', sans-serif",
                       fontSize: "0.85rem",
@@ -366,6 +368,7 @@ export function Contact() {
                       Message (Optional)
                     </label>
                     <textarea
+                      id="contact-message"
                       name="message"
                       value={form.message}
                       onChange={handleChange}
