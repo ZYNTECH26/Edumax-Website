@@ -52,41 +52,49 @@ export function Academics() {
     >
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div style={{
-          textAlign: "center",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          gap: "2.5rem",
           marginBottom: "4rem",
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(20px)",
           transition: "opacity 0.6s ease, transform 0.6s ease",
-        }}>
-          <div style={{
-            display: "inline-block",
-            background: "rgba(245,166,35,0.12)",
-            border: "1px solid rgba(245,166,35,0.3)",
-            borderRadius: 9999,
-            padding: "0.35rem 1rem",
-            marginBottom: "1rem",
-          }}>
-            <span style={{
-              fontFamily: "'Manrope', sans-serif",
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: "#e08e10",
+        }}
+          className="academics-header"
+        >
+          <div>
+            <div style={{
+              display: "inline-block",
+              background: "rgba(245,166,35,0.12)",
+              border: "1px solid rgba(245,166,35,0.3)",
+              borderRadius: 9999,
+              padding: "0.35rem 1rem",
+              marginBottom: "1rem",
             }}>
-              Academic Streams
-            </span>
+              <span style={{
+                fontFamily: "'Manrope', sans-serif",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#e08e10",
+              }}>
+                Academic Streams
+              </span>
+            </div>
+            <h2 style={{ color: "#0E1E45", margin: 0 }}>
+              A Well-Rounded Curriculum
+            </h2>
           </div>
-          <h2 style={{ color: "#0E1E45", marginBottom: "1rem" }}>
-            A Well-Rounded Curriculum
-          </h2>
           <p style={{
             fontFamily: "'Manrope', sans-serif",
             fontSize: "1.05rem",
             color: "#5a6485",
-            maxWidth: 540,
-            margin: "0 auto",
+            maxWidth: 380,
+            margin: 0,
             lineHeight: 1.6,
+            flexShrink: 0,
           }}>
             Designed for university readiness — every stream combines rigorous academics
             with practical skills for the modern world.
@@ -186,6 +194,9 @@ export function Academics() {
       <style>{`
         @media (max-width: 900px) {
           .academics-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 700px) {
+          .academics-header { flex-direction: column !important; align-items: flex-start !important; }
         }
       `}</style>
     </section>

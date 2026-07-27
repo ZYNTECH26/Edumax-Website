@@ -51,6 +51,26 @@ export function Hero({ onApply }: { onApply: () => void }) {
         pointerEvents: "none",
       }} />
 
+      {/* Signature outlined watermark */}
+      <div aria-hidden="true" style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        fontFamily: "'Sora', sans-serif",
+        fontWeight: 800,
+        fontSize: "clamp(8rem, 24vw, 22rem)",
+        lineHeight: 1,
+        letterSpacing: "-0.03em",
+        color: "transparent",
+        WebkitTextStroke: "1.5px rgba(255,255,255,0.05)",
+        whiteSpace: "nowrap",
+        pointerEvents: "none",
+        userSelect: "none",
+      }}>
+        2026
+      </div>
+
       <div style={{
         maxWidth: 1280,
         margin: "0 auto",
@@ -60,6 +80,8 @@ export function Hero({ onApply }: { onApply: () => void }) {
         gap: "4rem",
         alignItems: "center",
         width: "100%",
+        position: "relative",
+        zIndex: 1,
       }}
         className="hero-grid"
       >
@@ -95,7 +117,7 @@ export function Hero({ onApply }: { onApply: () => void }) {
           <h1 style={{
             fontFamily: "'Sora', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(2.2rem, 4.5vw, 3.75rem)",
+            fontSize: "clamp(2.4rem, 5.2vw, 4.25rem)",
             color: "#ffffff",
             lineHeight: 1.1,
             marginBottom: "1.5rem",

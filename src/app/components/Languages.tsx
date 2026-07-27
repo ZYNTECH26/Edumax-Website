@@ -16,6 +16,7 @@ export function Languages() {
   return (
     <section
       ref={ref}
+      id="languages"
       style={{
         background: "linear-gradient(135deg, #0E1E45 0%, #16295C 100%)",
         padding: "7rem 2rem",

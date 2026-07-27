@@ -37,6 +37,7 @@ export default function PublicSite() {
 
       <style>{`
         html { scroll-behavior: smooth; }
+        html, body { overflow-x: hidden; max-width: 100%; }
         * { box-sizing: border-box; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }

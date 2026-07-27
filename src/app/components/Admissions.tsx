@@ -118,7 +118,11 @@ export function Admissions({ onApply }: { onApply: () => void }) {
         }}
           className="admissions-grid"
         >
-          {plans.map((plan, i) => (
+          {plans.map((plan, i) => {
+            const restingScale = plan.featured ? 1.03 : 1;
+            const offsetX = i === 0 ? -28 : i === 2 ? 28 : 0;
+            const enterScale = plan.featured ? 0.94 : 0.98;
+            return (
             <div
               key={plan.level}
               style={{
@@ -130,10 +134,12 @@ export function Admissions({ onApply }: { onApply: () => void }) {
                 boxShadow: plan.featured
                   ? "0 20px 60px rgba(14,30,69,0.25)"
                   : "0 4px 20px rgba(14,30,69,0.06)",
-                transform: plan.featured ? "scale(1.03)" : "scale(1)",
+                transform: visible
+                  ? `translateX(0) scale(${restingScale})`
+                  : `translateX(${offsetX}px) scale(${enterScale})`,
                 position: "relative",
                 opacity: visible ? 1 : 0,
-                transition: `opacity 0.6s ease ${i * 0.12}s, box-shadow 0.25s ease`,
+                transition: `opacity 0.6s ease ${i * 0.12}s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${i * 0.12}s, box-shadow 0.25s ease`,
               }}
               onMouseEnter={(e) => {
                 if (!plan.featured) {
@@ -280,7 +286,7 @@ export function Admissions({ onApply }: { onApply: () => void }) {
                 Apply Now <ExternalLink size={14} />
               </button>
             </div>
-          ))}
+          );})}
         </div>
 
         <p style={{
