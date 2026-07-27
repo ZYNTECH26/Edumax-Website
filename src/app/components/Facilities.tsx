@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FlaskConical, Monitor } from "lucide-react";
+import LAB_SCIENCE from "../../assets/gallery/chemistry-lab.jpg";
 
-const LAB_SCIENCE = "https://images.unsplash.com/photo-1679134015772-943d09a750ae?w=900&h=700&fit=crop&auto=format";
 const LAB_COMPUTER = "https://images.unsplash.com/photo-1719159381981-1327b22aff9b?w=900&h=700&fit=crop&auto=format";
 
 export function Facilities() {
@@ -20,9 +20,9 @@ export function Facilities() {
   const panels = [
     {
       img: LAB_SCIENCE,
-      alt: "Students conducting science experiments in the Edumax science laboratory",
+      alt: "Edumax Global College students in lab coats and safety goggles conducting a chemistry experiment",
       icon: <FlaskConical size={22} strokeWidth={1.5} />,
-      title: "Science Laboratory",
+      title: "Chemistry Laboratory",
       desc: "Hands-on practicals in Biology, Chemistry and Physics with fully-equipped lab stations and modern apparatus.",
       delay: 0,
     },
