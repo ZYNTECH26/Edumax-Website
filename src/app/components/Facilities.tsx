@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FlaskConical, Monitor } from "lucide-react";
 import LAB_SCIENCE from "../../assets/gallery/chemistry-lab.jpg";
-
-const LAB_COMPUTER = "https://images.unsplash.com/photo-1719159381981-1327b22aff9b?w=900&h=700&fit=crop&auto=format";
+import LAB_COMPUTER from "../../assets/gallery/computer-lab.jpg";
 
 export function Facilities() {
   const [visible, setVisible] = useState(false);
@@ -28,7 +27,7 @@ export function Facilities() {
     },
     {
       img: LAB_COMPUTER,
-      alt: "Students working on computers in the Edumax computer laboratory",
+      alt: "Workstations in the Edumax Global College computer laboratory",
       icon: <Monitor size={22} strokeWidth={1.5} />,
       title: "Computer Laboratory",
       desc: "Modern computing facilities supporting our Coding, AI and Digital Skills programs with the latest hardware.",
