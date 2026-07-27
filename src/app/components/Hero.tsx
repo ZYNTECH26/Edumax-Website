@@ -280,7 +280,7 @@ export function Hero({ onApply }: { onApply: () => void }) {
         alignItems: "center",
         gap: "0.25rem",
         opacity: 0.6,
-        animation: "bounce 2s infinite",
+        animation: "scrollFloat 2s infinite",
       }}>
         <span style={{ fontFamily: "'Manrope', sans-serif", fontSize: "0.75rem", color: "#ffffff" }}>
           Scroll to explore
@@ -289,7 +289,7 @@ export function Hero({ onApply }: { onApply: () => void }) {
       </div>
 
       <style>{`
-        @keyframes bounce {
+        @keyframes scrollFloat {
           0%, 100% { transform: translateX(-50%) translateY(0); }
           50% { transform: translateX(-50%) translateY(6px); }
         }
