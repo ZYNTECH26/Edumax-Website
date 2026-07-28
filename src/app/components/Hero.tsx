@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, BookOpen, Globe } from "lucide-react";
+import { BookOpen, Globe } from "lucide-react";
 import HERO_IMAGE from "../../assets/gallery/campus-12.jpg";
 
 export function Hero({ onApply }: { onApply: () => void }) {
@@ -269,30 +269,7 @@ export function Hero({ onApply }: { onApply: () => void }) {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div style={{
-        position: "absolute",
-        bottom: "2rem",
-        left: "50%",
-        transform: "translateX(-50%)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "0.25rem",
-        opacity: 0.6,
-        animation: "scrollFloat 2s infinite",
-      }}>
-        <span style={{ fontFamily: "'Manrope', sans-serif", fontSize: "0.75rem", color: "#ffffff" }}>
-          Scroll to explore
-        </span>
-        <ChevronDown size={20} color="#ffffff" />
-      </div>
-
       <style>{`
-        @keyframes scrollFloat {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-50%) translateY(6px); }
-        }
         @media (max-width: 768px) {
           .hero-grid {
             grid-template-columns: 1fr !important;

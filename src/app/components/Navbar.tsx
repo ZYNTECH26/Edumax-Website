@@ -42,12 +42,26 @@ export function Navbar({ onApply }: { onApply: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileGroupOpen, setMobileGroupOpen] = useState<string | null>(null);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== "undefined" ? window.innerWidth >= 768 : true
+  );
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const handler = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+      if (e.matches) setMenuOpen(false);
+    };
+    setIsDesktop(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   useEffect(() => {
@@ -116,8 +130,9 @@ export function Navbar({ onApply }: { onApply: () => void }) {
           <img src={logo} alt="" style={{ width: 42, height: 42, objectFit: "contain" }} />
         </button>
 
-        {/* Desktop nav */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.1rem", marginLeft: "0.5rem" }} className="hidden md:flex">
+        {/* Desktop nav — centered in the space between the logo and the CTAs */}
+        {isDesktop && (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.1rem", flex: 1 }}>
           {NAV_ITEMS.map((item) =>
             item.children ? (
               <div key={item.label} style={{ position: "relative" }}>
@@ -215,9 +230,11 @@ export function Navbar({ onApply }: { onApply: () => void }) {
             )
           )}
         </div>
+        )}
 
-        {/* CTAs */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginLeft: "auto" }} className="hidden md:flex">
+        {/* CTAs — pinned to the right edge */}
+        {isDesktop && (
+        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexShrink: 0 }}>
           <button
             onClick={() => go({ label: "Contact", href: "#contact", type: "anchor" })}
             className="press-btn"
@@ -262,11 +279,13 @@ export function Navbar({ onApply }: { onApply: () => void }) {
             Apply for 2026
           </button>
         </div>
+        )}
 
-        {/* Hamburger */}
+        {/* Hamburger — mobile only */}
+        {!isDesktop && (
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden press-btn"
+          className="press-btn"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           style={{
@@ -286,6 +305,7 @@ export function Navbar({ onApply }: { onApply: () => void }) {
         >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
+        )}
       </nav>
 
       {/* Mobile overlay */}
